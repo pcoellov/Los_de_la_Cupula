@@ -1,0 +1,38 @@
+DROP TABLE Pedido;
+DROP TABLE Producto;
+DROP TABLE Categoria;
+
+CREATE TABLE Categoria (
+        idCategoria INT GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+        nombre VARCHAR(30),
+        PRIMARY KEY (idCategoria));
+
+INSERT INTO Categoria (nombre) VALUES ('Alimentación');
+INSERT INTO Categoria (nombre) VALUES ('Drogueria');
+INSERT INTO Categoria (nombre) VALUES ('Prensa');
+INSERT INTO Categoria (nombre) VALUES ('Herramientas');
+
+CREATE TABLE Producto (
+        idProducto INT GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+        nombre VARCHAR(30),
+        categoria INT,
+        imagen VARCHAR(30),
+        precio FLOAT NOT NULL,    
+        PRIMARY KEY (idProducto));
+
+INSERT INTO Producto (nombre,categoria,imagen,precio) VALUES ('Barra de pan', 1, 'img/barrapan.jpg', 0.59);
+INSERT INTO Producto (nombre,categoria,imagen,precio) VALUES ('Lejía', 2, 'img/lejia.jpg', 2.15);
+INSERT INTO Producto (nombre,categoria,imagen,precio) VALUES ('Muy Interesante', 3, 'img/interesante.jpg', 1.50);
+INSERT INTO Producto (nombre,categoria,imagen,precio) VALUES ('Martillo neumático', 4, 'img/martilloneu.jpg', 324.95);
+
+
+CREATE TABLE Pedido (
+        idPedido INT GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+	nombre VARCHAR(30),
+        producto INT, 
+	cantidad INT,
+	estado INT,
+        PRIMARY KEY (idPedido));
+
+ALTER TABLE Producto ADD FOREIGN KEY (categoria) REFERENCES Categoria(idCategoria);
+ALTER TABLE Pedido ADD FOREIGN KEY (producto) REFERENCES Producto(idProducto);
